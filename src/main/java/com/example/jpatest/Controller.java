@@ -1,22 +1,28 @@
 package com.example.jpatest;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class Controller {
 
-    private CustomerRepo customerRepo;
+    private dbService db;
 
-    public Controller(CustomerRepo customerRepo) {
-        this.customerRepo = customerRepo;
+    public Controller(dbService db) {
+        this.db = db;
     }
 
     @GetMapping("/all")
-    public @ResponseBody
-    Iterable <Customers> getAllUsers() {
-        return customerRepo.findAll();
+    public Iterable <Customers> findAll(){
+
+        return db.getAllUsers();
+
+    }
+
+    @PostMapping("/add")
+    public void addNewCustomer(@RequestBody Customers customer){
+
+        db.addNewCustomer(customer);
+
     }
 
 }
